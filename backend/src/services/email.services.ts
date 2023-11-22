@@ -1,38 +1,33 @@
-import nodemailer from 'nodemailer';
+import sendGrid from '@sendgrid/mail';
+import { BaseError, RequestError } from '../utils/errors.js';
 interface IEmailOptions {
   to: string;
   subject: string;
-  type: string;
   text?: string;
+  html?: string;
 }
-let mailTransporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'nwaforaugutine922@gmail.com',
-    pass: 'Austinebase@321?..',
-  },
-});
 
 export const sendMail = async function ({
   to,
   subject,
   text = '',
-}: IEmailOptions) {
+  html = '',
+}: IEmailOptions): Promise<void> {
   try {
-    let mailDetails = {
-      from: 'nwaforaugutine922@gmail.com',
+    sendGrid.setApiKey(process.env.SENDGRID_API_KEY ?? '');
+
+    const options = {
       to,
+      from: 'benjamin.mai@worthycause.com',
       subject,
-      text: text,
+      text,
     };
 
-    mailTransporter.sendMail(mailDetails, function (err, data) {
-      if (err) {
-        console.log(err);
-        console.log('Error Occurs');
-      } else {
-        console.log('Email sent successfully');
-      }
+    await sendGrid.send(options);
+  } catch (error: any) {
+    throw new BaseError({
+      code: 422,
+      message: 'Email provider failed',
     });
-  } catch (error) {}
+  }
 };

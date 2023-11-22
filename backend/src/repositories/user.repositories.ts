@@ -62,6 +62,11 @@ export const userRegistration = async (
     };
 
     await UserModel.registerUser(userData);
+    await sendMail({
+      to: email,
+      subject: 'Registration code',
+      text: `This is verification code : ${verification_code}`,
+    });
 
     return {
       code: 200,
@@ -178,6 +183,12 @@ export const resetPassword = async (
 
     const verification_code = await utils.optGenerator();
 
+    await sendMail({
+      to: userEmail,
+      subject: 'Reset password code',
+      text: `this is verification code : ${verification_code}`,
+    });
+
     // send email token
 
     return {
@@ -186,6 +197,7 @@ export const resetPassword = async (
       data: [],
     };
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
