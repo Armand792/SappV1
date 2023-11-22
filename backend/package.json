@@ -6,7 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
-    "@svgr/webpack": "^8.1.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.9.1",
