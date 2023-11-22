@@ -8,7 +8,7 @@ import {
   IResetPasswordConfirmationRequest,
   IResetPasswordRequest,
   IResponse,
-} from '../interfaces/user.interface';
+} from '../interfaces/user.interface.js';
 import { UserModel } from '../models/user.model.js';
 import { sendMail } from '../services/email.services.js';
 import { v4 as uuidv4 } from 'uuid';
