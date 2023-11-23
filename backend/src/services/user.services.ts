@@ -8,6 +8,7 @@ import {
   IResponse,
   IResetPasswordRequest,
   IResetPasswordConfirmationRequest,
+  IVerificationRequest,
 } from '../interfaces/user.interface.js';
 import * as repo from '../repositories/user.repositories.js';
 
@@ -53,4 +54,15 @@ export const resetPasswordConfirmation = async (
   user: IResetPasswordConfirmationRequest
 ): Promise<IResponse | []> => {
   return await repo.resetPasswordConfirmation(user);
+};
+
+/**
+ * Verify user account
+ *
+ * @returns Promise
+ */
+export const verifyAccount = async (
+  verificationData: IVerificationRequest
+): Promise<IResponse | []> => {
+  return await repo.verifyAccount(verificationData);
 };

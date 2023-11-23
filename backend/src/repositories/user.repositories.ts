@@ -8,6 +8,7 @@ import {
   IResetPasswordConfirmationRequest,
   IResetPasswordRequest,
   IResponse,
+  IVerificationRequest,
 } from '../interfaces/user.interface.js';
 import { UserModel } from '../models/user.model.js';
 import { sendMail } from '../services/email.services.js';
@@ -70,7 +71,7 @@ export const userRegistration = async (
 
     return {
       code: 200,
-      message: 'User created successfully',
+      message: 'successfully Registered',
       data: {
         email,
         user_id: id,
@@ -112,15 +113,15 @@ export const userLogin = async (payload: ILoginRequest): Promise<IResponse> => {
       is_verified,
     } = user[0];
 
-    // if (!is_verified) {
-    //   throw new RequestError({
-    //     code: 400,
-    //     message: 'Verification required',
-    //   });
-    // }
+    if (!is_verified) {
+      throw new RequestError({
+        code: 400,
+        message: 'Verification required',
+      });
+    }
 
     const isCorrect = await utils.comparePassword(password, hashedPassword);
-    console.log(isCorrect);
+
     if (!isCorrect) {
       throw new RequestError({
         code: 400,
@@ -237,6 +238,69 @@ export const resetPasswordConfirmation = async (
     return {
       code: 200,
       message: 'User password reset successfully',
+      data: [],
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Verify user account
+ * @return promise
+ */
+
+export const verifyAccount = async (
+  payload: IVerificationRequest
+): Promise<IResponse> => {
+  try {
+    const { code, email } = payload;
+
+    const user = await UserModel.findUserEmail(email, [
+      'user_id',
+      'user_email',
+    ]);
+
+    if (user.length === 0) {
+      throw new RequestError({
+        code: 400,
+        message: 'User not found',
+      });
+    }
+
+    const { user_id } = user[0];
+
+    const verificationData = await UserModel.findUserVerificationById(user_id, [
+      'verification_code',
+    ]);
+
+    if (verificationData.length === 0) {
+      throw new RequestError({
+        code: 400,
+        message: 'User not found',
+      });
+    }
+
+    const { verification_code } = verificationData[0];
+
+    if (verification_code !== code) {
+      throw new RequestError({
+        code: 400,
+        message: 'Invalid verification code',
+      });
+    }
+
+    await UserModel.updateUser(
+      {
+        is_verified: true,
+      },
+      ['is_verified'],
+      user_id
+    );
+
+    return {
+      code: 200,
+      message: 'User verified successfully',
       data: [],
     };
   } catch (error) {

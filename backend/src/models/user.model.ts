@@ -54,6 +54,22 @@ export class UserModel {
     }
   }
 
+  static async findUserVerificationById(
+    id: string,
+    columns: string[]
+  ): Promise<RowList<Row[]> | any> {
+    try {
+      return await sql`SELECT ${sql(
+        columns
+      )} FROM auth_token WHERE user_id = ${id}`;
+    } catch (error) {
+      throw new DataBaseError({
+        message: 'Query error',
+        stack: error,
+      });
+    }
+  }
+
   static async updateAuthToken(
     values: { [key: string]: any },
     columns: string[],

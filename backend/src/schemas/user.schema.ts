@@ -4,7 +4,8 @@ import {
   IRegistrationRequest,
   IResetPasswordConfirmationRequest,
   IResetPasswordRequest,
-} from 'src/interfaces/user.interface';
+  IVerificationRequest,
+} from 'src/interfaces/user.interface.js';
 
 export const RegistrationSchema: JSONSchemaType<IRegistrationRequest> = {
   type: 'object',
@@ -56,3 +57,17 @@ export const ResetPasswordConfirmationSchema: JSONSchemaType<IResetPasswordConfi
     required: ['email', 'password'],
     additionalProperties: false,
   };
+
+export const VerificationSchema: JSONSchemaType<IVerificationRequest> = {
+  type: 'object',
+  properties: {
+    code: {
+      type: 'string',
+    },
+    email: {
+      type: 'string',
+    },
+  },
+  required: ['email', 'code'],
+  additionalProperties: false,
+};

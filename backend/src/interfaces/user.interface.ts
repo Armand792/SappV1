@@ -22,3 +22,8 @@ export interface IResponse {
   message: string;
   data?: any;
 }
+
+export interface IVerificationRequest {
+  code: string;
+  email: string;
+}

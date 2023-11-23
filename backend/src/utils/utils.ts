@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import Ajv, { DefinedError, AnySchema } from 'ajv';
+import ajvModule, { DefinedError, AnySchema } from 'ajv';
 import bcrypt from 'bcrypt';
 import otpGenerator from 'otp-generator';
 import { ExpressWinstonRequest } from 'express-winston';
 import { AnyAaaaRecord } from 'dns';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
+const Ajv = ajvModule.default;
 const ajv = new Ajv({ allErrors: true });
 
 /**
@@ -121,7 +122,9 @@ export const optGenerator = async (options?: {
   [key: string]: AnyAaaaRecord;
 }) => {
   return otpGenerator.generate(6, {
-    upperCaseAlphabets: false,
+    upperCaseAlphabets: true,
+    lowerCaseAlphabets: false,
+    digits: true,
     specialChars: false,
     ...options,
   });
