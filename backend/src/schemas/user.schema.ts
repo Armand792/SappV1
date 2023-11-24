@@ -53,8 +53,11 @@ export const ResetPasswordConfirmationSchema: JSONSchemaType<IResetPasswordConfi
       email: {
         type: 'string',
       },
+      code: {
+        type: 'string',
+      },
     },
-    required: ['email', 'password'],
+    required: ['email', 'password', 'code'],
     additionalProperties: false,
   };
 

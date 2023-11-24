@@ -15,6 +15,7 @@ export interface IResetPasswordRequest {
 export interface IResetPasswordConfirmationRequest {
   password: string;
   email: string;
+  code: string;
 }
 
 export interface IResponse {

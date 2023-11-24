@@ -118,10 +118,11 @@ export const resetPasswordConfirmation = async (
   res: Response
 ) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, code } = req.body;
     const payload = {
       password,
       email,
+      code,
     };
     const reset_password_information =
       await userServices.resetPasswordConfirmation(payload);

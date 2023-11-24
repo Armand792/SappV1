@@ -11,6 +11,7 @@ import { IRegisterPayload } from '@/interfaces/user.interface';
 import notification from '@/utils/notification';
 import errorFormmatter from '@/utils/errorFormatter';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,6 +34,10 @@ interface IFormValues {
 
 const Registration = () => {
   const history = useRouter();
+  const { data: session } = useSession();
+
+  console.log(session);
+
   const registration = async (values: IFormValues) => {
     try {
       const payload: IRegisterPayload = {
@@ -40,7 +45,7 @@ const Registration = () => {
         password: values.password,
       };
       const response = await apiServer.register(payload);
-      console.log(response.data);
+
       notification({
         title: 'Registration',
         message: response.result.message,
