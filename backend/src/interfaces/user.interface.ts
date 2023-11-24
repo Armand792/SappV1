@@ -15,10 +15,16 @@ export interface IResetPasswordRequest {
 export interface IResetPasswordConfirmationRequest {
   password: string;
   email: string;
+  code: string;
 }
 
 export interface IResponse {
   code: number;
   message: string;
   data?: any;
+}
+
+export interface IVerificationRequest {
+  code: string;
+  email: string;
 }

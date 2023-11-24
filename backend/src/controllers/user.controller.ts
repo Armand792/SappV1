@@ -118,10 +118,11 @@ export const resetPasswordConfirmation = async (
   res: Response
 ) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, code } = req.body;
     const payload = {
       password,
       email,
+      code,
     };
     const reset_password_information =
       await userServices.resetPasswordConfirmation(payload);
@@ -145,6 +146,48 @@ export const resetPasswordConfirmation = async (
     }
   }
 };
+
+
+/**
+ * Post handler.
+ *
+ * @param  {Request} req
+ * @param  {Response} res
+ */
+export const verifyAccount = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { email, code } = req.body;
+    const payload = {
+      code,
+      email,
+    };
+    
+    const verification_information =
+      await userServices.verifyAccount(payload);
+
+    res
+      .status(200)
+      .json(apiUtils.buildSuccessResponse(verification_information));
+  } catch (error) {
+    if (error instanceof DataBaseError) {
+      return res
+        .status(422)
+        .json(apiUtils.buildErrorResponse(['Server error']));
+    } else if (error instanceof RequestError) {
+      return res
+        .status(error.code ?? 200)
+        .json(apiUtils.buildErrorResponse(error));
+    } else {
+      return res
+        .status(500)
+        .json(apiUtils.buildErrorResponse(['Server error']));
+    }
+  }
+};
+
 
 
 
