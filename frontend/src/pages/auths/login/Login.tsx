@@ -12,6 +12,9 @@ import { useRouter } from 'next/navigation';
 import { saveLoginData } from '@/store/reducers/user.reducers';
 import { useAppDispatch } from '@/utils/hooks/store.hooks';
 import { ILoginPayload } from '@/interfaces/user.interface';
+import { useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
+import { useEffect } from 'react';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,6 +35,14 @@ interface IFormValues {
 const Login = () => {
   const history = useRouter();
   const dispatch = useAppDispatch();
+
+  const { data: session } = useSession();
+
+  const googleSignin = () => {
+    try {
+      signIn('google', { redirect: false, prompt: 'login' });
+    } catch (error: any) {}
+  };
 
   const login = async (values: IFormValues) => {
     try {
@@ -61,6 +72,38 @@ const Login = () => {
       });
     }
   };
+
+  const autoLogin = async () => {
+    return await apiServer.continueWithGoogle({
+      email: session?.user.email ?? '',
+      token: session?.accessToken ?? '',
+    });
+  };
+
+  useEffect(() => {
+    if (session === null || session === undefined) {
+      return;
+    }
+
+    autoLogin()
+      .then((response) => {
+        dispatch(
+          saveLoginData({
+            token: response.result.data[0].token,
+            user_id: response.result.data[0].user_id,
+          })
+        );
+        history.push('/');
+      })
+      .catch((error) => {
+        notification({
+          title: 'Register',
+          type: 'danger',
+          message: errorFormmatter(error),
+        });
+        signOut({ redirect: false });
+      });
+  }, [session]);
 
   return (
     <main className='w-full max-w-[640px] min-h-[640px] [padding-left:_clamp(1rem,2vw,calc(64rem_/_16))]  [padding-right:_clamp(1rem,2vw,calc(64rem_/_16))]   py-[32px]  bg-white rounded-2xl shadow justify-center items-center gap-2 inline-flex mx-auto'>
@@ -127,7 +170,7 @@ const Login = () => {
               <span className="w-20 h-4 text-center text-black text-base font-normal font-['Poppins'] leading-tight">
                 or
               </span>
-              <Button className='!max-w-[400px]'>
+              <Button className='!max-w-[400px]' onClick={googleSignin}>
                 <Image alt='google-icon' src={googleIcon} />
                 <span className="text-black text-base font-bold font-['Europa-Bold'] leading-tight">
                   Continue with Google{' '}

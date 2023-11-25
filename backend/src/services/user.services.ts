@@ -9,6 +9,7 @@ import {
   IResetPasswordRequest,
   IResetPasswordConfirmationRequest,
   IVerificationRequest,
+  IContinueWithGoogleRequest,
 } from '../interfaces/user.interface.js';
 import * as repo from '../repositories/user.repositories.js';
 
@@ -66,3 +67,16 @@ export const verifyAccount = async (
 ): Promise<IResponse | []> => {
   return await repo.verifyAccount(verificationData);
 };
+
+/**
+ * Continue with google signin and signup
+ *
+ * @returns Promise
+ */
+export const continueWithGoogle = async (
+  data: IContinueWithGoogleRequest
+): Promise<IResponse | []> => {
+  return await repo.continueWithGoogle(data);
+};
+
+

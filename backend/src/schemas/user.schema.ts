@@ -1,11 +1,12 @@
 import { JSONSchemaType } from 'ajv';
 import {
+  IContinueWithGoogleRequest,
   ILoginRequest,
   IRegistrationRequest,
   IResetPasswordConfirmationRequest,
   IResetPasswordRequest,
   IVerificationRequest,
-} from 'src/interfaces/user.interface.js';
+} from '../interfaces/user.interface.js';
 
 export const RegistrationSchema: JSONSchemaType<IRegistrationRequest> = {
   type: 'object',
@@ -74,3 +75,18 @@ export const VerificationSchema: JSONSchemaType<IVerificationRequest> = {
   required: ['email', 'code'],
   additionalProperties: false,
 };
+
+export const ContinueWithGoogleSchema: JSONSchemaType<IContinueWithGoogleRequest> =
+  {
+    type: 'object',
+    properties: {
+      token: {
+        type: 'string',
+      },
+      email: {
+        type: 'string',
+      },
+    },
+    required: ['email', 'token'],
+    additionalProperties: false,
+  };

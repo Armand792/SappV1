@@ -4,6 +4,7 @@
 import { Router } from 'express';
 import { validateSchema, whitelist } from '../utils/utils.js';
 import {
+  continueWithGoogle,
   createUser,
   loginUser,
   resetPassword,
@@ -11,6 +12,7 @@ import {
   verifyAccount,
 } from '../controllers/user.controller.js';
 import {
+  ContinueWithGoogleSchema,
   LoginSchema,
   RegistrationSchema,
   ResetPasswordConfirmationSchema,
@@ -19,6 +21,10 @@ import {
 } from '../schemas/user.schema.js';
 
 const router = Router();
+
+router
+  .route('/continue-with-google')
+  .post([validateSchema(ContinueWithGoogleSchema)], continueWithGoogle);
 
 router
   .route('/register')
