@@ -3,6 +3,7 @@
  */
 
 import {
+  IContinueWithGoogleRequest,
   ILoginRequest,
   IRegistrationRequest,
   IResetPasswordConfirmationRequest,
@@ -15,6 +16,81 @@ import { sendMail } from '../services/email.services.js';
 import { v4 as uuidv4 } from 'uuid';
 import * as utils from '../utils/utils.js';
 import { RequestError } from '../utils/errors.js';
+
+/**
+ * ContinueWithGoogle signin and signup
+ * @return promise
+ */
+
+export const continueWithGoogle = async (
+  payload: IContinueWithGoogleRequest
+): Promise<IResponse> => {
+  try {
+    const { email, token } = payload;
+
+    const user = await UserModel.findUserEmail(email, [
+      'user_id',
+      'user_email',
+    ]);
+
+    if (user.length === 0 && email !== '') {
+      // throw new RequestError({
+      //   code: 400,
+      //   message: 'Not allowed to login, you have to register',
+      // });
+
+      const id = uuidv4();
+      const user_type = 'none';
+
+      const userData = {
+        email,
+        user_id: id,
+        user_type,
+        token,
+        is_verified: true,
+      };
+
+      await UserModel.continueWithGoogle(userData);
+
+      return {
+        code: 200,
+        message: 'login successfully',
+        data: [
+          {
+            token,
+            user_id: id,
+          },
+        ],
+      };
+    } else {
+      const { user_id } = user[0];
+      await UserModel.updateAuthToken(
+        {
+          token,
+        },
+        ['token'],
+        user_id
+      );
+      return {
+        code: 200,
+        message: 'login successfully',
+        data: [
+          {
+            token,
+            user_id,
+          },
+        ],
+      };
+    }
+
+   
+
+  
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 /**
  * Creates a new user.
@@ -349,5 +425,3 @@ export const verifyAccount = async (
     throw error;
   }
 };
-
-

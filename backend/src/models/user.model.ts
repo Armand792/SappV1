@@ -23,6 +23,27 @@ export class UserModel {
     }
   }
 
+  static async continueWithGoogle(user: {
+    email: string;
+    user_id: string;
+    user_type: string;
+    token: string;
+    is_verified: boolean;
+  }): Promise<void> {
+    try {
+      await sql.begin(async (sql) => {
+        await sql`INSERT INTO users  (user_email,user_id,user_type, is_verified) VALUES(${user.email},${user.user_id},${user.user_type},${user.is_verified}) RETURNING *`;
+        await sql`INSERT INTO auth_token  (user_id,token) VALUES(${user.user_id},${user.token}) RETURNING *`;
+      });
+    } catch (error) {
+      console.log(error);
+      throw new DataBaseError({
+        message: 'Query error',
+        stack: error,
+      });
+    }
+  }
+
   static async findUserById(
     id: string,
     columns: string[]

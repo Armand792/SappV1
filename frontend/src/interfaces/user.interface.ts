@@ -3,6 +3,11 @@ export interface IRegisterPayload {
   password: string;
 }
 
+export interface IContinueWithGooglePayload {
+  email: string;
+  token: string;
+}
+
 export interface ILoginPayload {
   email: string;
   password: string;

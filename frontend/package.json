@@ -18,6 +18,7 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.12.0",
     "react-loader-spinner": "^5.4.5",
     "react-notifications-component": "^4.0.1",
     "react-redux": "^8.1.3",

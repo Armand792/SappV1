@@ -189,5 +189,46 @@ export const verifyAccount = async (
 };
 
 
+/**
+ * Post handler.
+ *
+ * @param  {Request} req
+ * @param  {Response} res
+ */
+export const continueWithGoogle = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { email, token } = req.body;
+    const payload = {
+      token,
+      email,
+    };
+    
+    const continueWithGoogle_information =
+      await userServices.continueWithGoogle(payload);
+
+    res
+      .status(200)
+      .json(apiUtils.buildSuccessResponse(continueWithGoogle_information));
+  } catch (error) {
+    if (error instanceof DataBaseError) {
+      return res
+        .status(422)
+        .json(apiUtils.buildErrorResponse(['Server error']));
+    } else if (error instanceof RequestError) {
+      return res
+        .status(error.code ?? 200)
+        .json(apiUtils.buildErrorResponse(error));
+    } else {
+      return res
+        .status(500)
+        .json(apiUtils.buildErrorResponse(['Server error']));
+    }
+  }
+};
+
+
 
 

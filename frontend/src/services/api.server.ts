@@ -1,4 +1,5 @@
 import {
+  IContinueWithGooglePayload,
   ILoginPayload,
   IRegisterPayload,
   IResetPasswordConfirmationPayload,
@@ -22,6 +23,15 @@ const instance = axios.create({
 export const register = async (payload: IRegisterPayload) => {
   return (await instance.post('/user/register', JSON.stringify(payload)))?.data;
 };
+
+export const continueWithGoogle = async (
+  payload: IContinueWithGooglePayload
+) => {
+  return (
+    await instance.post('/user/continue-with-google', JSON.stringify(payload))
+  )?.data;
+};
+
 
 export const login = async (payload: ILoginPayload) => {
   return (await instance.post('/user/login', JSON.stringify(payload)))?.data;

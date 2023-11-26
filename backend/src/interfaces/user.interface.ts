@@ -3,6 +3,11 @@ export interface IRegistrationRequest {
   password: string;
 }
 
+export interface IContinueWithGoogleRequest {
+  email: string;
+  token: string;
+}
+
 export interface ILoginRequest {
   email: string;
   password: string;
