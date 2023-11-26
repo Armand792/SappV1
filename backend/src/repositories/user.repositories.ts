@@ -33,46 +33,61 @@ export const continueWithGoogle = async (
       'user_email',
     ]);
 
-    if (user.length === 0) {
-      throw new RequestError({
-        code: 400,
-        message: 'Not allowed to login, you have to register',
-      });
+    if (user.length === 0 && email !== '') {
+      // throw new RequestError({
+      //   code: 400,
+      //   message: 'Not allowed to login, you have to register',
+      // });
 
-      // const id = uuidv4();
-      // const user_type = 'none';
+      const id = uuidv4();
+      const user_type = 'none';
 
-      // const userData = {
-      //   email,
-      //   user_id: id,
-      //   user_type,
-      //   token,
-      //   is_verified: true,
-      // };
-
-      // await UserModel.continueWithGoogle(userData);
-    }
-
-    const { user_id } = user[0];
-    await UserModel.updateAuthToken(
-      {
+      const userData = {
+        email,
+        user_id: id,
+        user_type,
         token,
-      },
-      ['token'],
-      user_id
-    );
+        is_verified: true,
+      };
 
-    return {
-      code: 200,
-      message: 'login successfully',
-      data: [
+      await UserModel.continueWithGoogle(userData);
+
+      return {
+        code: 200,
+        message: 'login successfully',
+        data: [
+          {
+            token,
+            user_id: id,
+          },
+        ],
+      };
+    } else {
+      const { user_id } = user[0];
+      await UserModel.updateAuthToken(
         {
           token,
-          user_id,
         },
-      ],
-    };
+        ['token'],
+        user_id
+      );
+      return {
+        code: 200,
+        message: 'login successfully',
+        data: [
+          {
+            token,
+            user_id,
+          },
+        ],
+      };
+    }
+
+   
+
+  
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

@@ -36,6 +36,7 @@ export class UserModel {
         await sql`INSERT INTO auth_token  (user_id,token) VALUES(${user.user_id},${user.token}) RETURNING *`;
       });
     } catch (error) {
+      console.log(error);
       throw new DataBaseError({
         message: 'Query error',
         stack: error,
