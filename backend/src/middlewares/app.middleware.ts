@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { buildErrorResponse } from '../utils/utils.js';
+import { buildErrorResponse } from '../utils/utils';
 
 /**
  * AllowedHttpMethods middleware.

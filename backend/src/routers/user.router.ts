@@ -2,7 +2,7 @@
  * @file user routes
  */
 import { Router } from 'express';
-import { validateSchema, whitelist } from '../utils/utils.js';
+import { validateSchema, whitelist } from '../utils/utils';
 import {
   continueWithGoogle,
   createUser,
@@ -10,7 +10,7 @@ import {
   resetPassword,
   resetPasswordConfirmation,
   verifyAccount,
-} from '../controllers/user.controller.js';
+} from '../controllers/user.controller';
 import {
   ContinueWithGoogleSchema,
   LoginSchema,
@@ -18,7 +18,7 @@ import {
   ResetPasswordConfirmationSchema,
   ResetPasswordSchema,
   VerificationSchema,
-} from '../schemas/user.schema.js';
+} from '../schemas/user.schema';
 
 const router = Router();
 

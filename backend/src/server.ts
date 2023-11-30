@@ -2,11 +2,11 @@
  * @file Server.
  */
 
-import app from './app.js';
+import app from './app';
 import 'dotenv/config';
-import logger from './utils/logger.js';
+import logger from './utils/logger';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const signals = ['SIGINT', 'SIGTERM'];
 
 const server = app.listen(port, async () => {
@@ -25,4 +25,4 @@ signals.forEach((signal) => {
   });
 });
 
-export default server;
+

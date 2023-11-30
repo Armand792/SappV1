@@ -10,8 +10,8 @@ import {
   IResetPasswordConfirmationRequest,
   IVerificationRequest,
   IContinueWithGoogleRequest,
-} from '../interfaces/user.interface.js';
-import * as repo from '../repositories/user.repositories.js';
+} from '../interfaces/user.interface';
+import * as repo from '../repositories/user.repositories';
 
 /**
  * Creates a new user.

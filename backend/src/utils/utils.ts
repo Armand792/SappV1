@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import ajvModule, { DefinedError, AnySchema } from 'ajv';
+import Ajv, { DefinedError, AnySchema } from 'ajv';
 import bcrypt from 'bcrypt';
 import otpGenerator from 'otp-generator';
 import { ExpressWinstonRequest } from 'express-winston';
-import { AnyAaaaRecord } from 'dns';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-const Ajv = ajvModule.default;
-const ajv = new Ajv({ allErrors: true });
+// const Ajv = ajvModule.default;
+const ajv = new Ajv({
+  allErrors: true,
+});
 
 /**
  * Builds a success response.
@@ -118,9 +119,7 @@ export const comparePassword = async (
  *
  */
 
-export const optGenerator = async (options?: {
-  [key: string]: AnyAaaaRecord;
-}) => {
+export const optGenerator = async (options?: { [key: string]: any }) => {
   return otpGenerator.generate(6, {
     upperCaseAlphabets: true,
     lowerCaseAlphabets: false,

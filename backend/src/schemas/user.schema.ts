@@ -6,7 +6,7 @@ import {
   IResetPasswordConfirmationRequest,
   IResetPasswordRequest,
   IVerificationRequest,
-} from '../interfaces/user.interface.js';
+} from '../interfaces/user.interface';
 
 export const RegistrationSchema: JSONSchemaType<IRegistrationRequest> = {
   type: 'object',
