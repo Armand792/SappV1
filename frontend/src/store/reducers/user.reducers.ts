@@ -13,7 +13,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    saveLoginData: (state, action: PayloadAction<IUserLogin>): void => {
+    saveLoginData: (state, action: PayloadAction<IUserLogin>) => {
       state.auth = {
         ...state.auth,
         token: action.payload.token,
