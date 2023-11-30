@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import ContextProvider from './ContextProvider';
 import '../global_styles/index.css';
 import { NotificationProvider } from './NotificationProiver';
+import NextAuthProvider from './NextAuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ContextProvider>
-          <NotificationProvider />
-          {children}
-        </ContextProvider>
+        <NextAuthProvider>
+          <ContextProvider>
+            <NotificationProvider />
+            {children}
+          </ContextProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
