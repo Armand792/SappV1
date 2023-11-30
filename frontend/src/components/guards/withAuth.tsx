@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/utils/hooks/store.hooks';
 import { RootState } from '@/store';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 
 const WithAuthMiddleware = (
   component: JSX.Element | Element,
@@ -22,7 +21,7 @@ const WithAuthMiddleware = (
       navigation.push(path ?? '/login');
     }
 
-    return component;
+    return <>{component}</>;
   };
 };
 
