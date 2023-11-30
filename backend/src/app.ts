@@ -18,7 +18,7 @@ app.use(allowedContentType);
 app.use(allowedHeaders);
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://dev-worthy-backend.us-east-1.elasticbeanstalk.com',
     methods: 'GET,PUT,POST,DELETE',
     optionsSuccessStatus: 200,
   })
