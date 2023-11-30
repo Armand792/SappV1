@@ -20,9 +20,17 @@ export const userSlice = createSlice({
         user_id: action.payload.user_id,
       };
     },
+
+    logout: (state, action: PayloadAction<IUserLogin>) => {
+      state.auth = {
+        ...state.auth,
+        token: action.payload.token,
+        user_id: action.payload.user_id,
+      };
+    },
   },
 });
 
-export const { saveLoginData } = userSlice.actions;
+export const { saveLoginData, logout } = userSlice.actions;
 
 export default userSlice.reducer;

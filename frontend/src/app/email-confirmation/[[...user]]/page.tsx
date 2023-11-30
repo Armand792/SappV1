@@ -1,4 +1,4 @@
-import RegistrationConfirmation from '@/pages/auths/registration-confirmation/RegistrationConfirmation';
+import RegistrationConfirmation from '@/screens/auths/registration-confirmation/RegistrationConfirmation';
 
 export default function RegistrationConfirmationPage() {
   return <RegistrationConfirmation />;
