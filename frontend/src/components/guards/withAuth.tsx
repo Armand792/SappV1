@@ -3,23 +3,32 @@ import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/utils/hooks/store.hooks';
 import { RootState } from '@/store';
 import { useSession } from 'next-auth/react';
+import { ReactNode, useEffect } from 'react';
 
-const WithAuthMiddleware = (component: any, path?: string) => {
-  return (): JSX.Element | Element => {
-    const navigation = useRouter();
-    const { status } = useSession();
-    const userAuth = useAppSelector((state: RootState) => state.user.auth);
+const WithAuthMiddleware = ({ children }: { children: ReactNode }) => {
+  const navigation = useRouter();
+  const { status } = useSession();
+  const userAuth = useAppSelector((state: RootState) => state.user.auth);
 
+  const checkAuth = () => {
     if (
       userAuth.token === '' ||
       userAuth.user_id === '' ||
       status === 'unauthenticated'
     ) {
-      navigation.push(path ?? '/login');
+      navigation.push('/login');
     }
-
-    return <>{typeof component === 'function' ? component() : component} </>;
   };
+
+  useEffect(() => {
+    checkAuth();
+  }, [status, userAuth]);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  return <>{children} </>;
 };
 
 export default WithAuthMiddleware;

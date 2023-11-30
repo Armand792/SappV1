@@ -7,13 +7,13 @@ const Home = () => {
   const user = useSession();
   console.log(user);
   return (
-    <>
+    <WithAuthMiddleware>
       <div className='flex items-center flex-col justify-center h-full w-full mb-[10px]'>
         home
         <Button onClick={() => signOut()}>sign out</Button>
       </div>
-    </>
+    </WithAuthMiddleware>
   );
 };
 
-export default WithAuthMiddleware(<Home />);
+export default Home;
