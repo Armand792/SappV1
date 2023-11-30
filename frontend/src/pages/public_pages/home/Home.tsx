@@ -1,4 +1,3 @@
-'use client';
 import { Button } from '@/components';
 import WithAuthMiddleware from '@/components/guards/withAuth';
 import { signOut, useSession } from 'next-auth/react';

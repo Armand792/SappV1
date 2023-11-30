@@ -1,4 +1,3 @@
-'use client';
 import { Button, Input, InputFieldItem } from '@/components/index';
 import Link from 'next/link';
 import googleIcon from '@/assets/images/google.png';
