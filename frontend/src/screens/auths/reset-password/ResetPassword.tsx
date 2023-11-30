@@ -45,7 +45,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <main className='w-full max-w-[640px] min-h-[640px] [padding-left:_clamp(1rem,2vw,calc(64rem_/_16))]  [padding-right:_clamp(1rem,2vw,calc(64rem_/_16))]   py-[32px]  bg-white rounded-2xl shadow justify-center items-center gap-2 inline-flex mx-auto'>
+    <main className='my-[4rem] w-full max-w-[640px] min-h-[640px] [padding-left:_clamp(1rem,2vw,calc(64rem_/_16))]  [padding-right:_clamp(1rem,2vw,calc(64rem_/_16))]   py-[32px]  bg-white rounded-2xl shadow justify-center items-center gap-2 inline-flex mx-auto'>
       <section className='w-full h-full justify-center items-center gap-2 flex flex-col'>
         <h1 className="mb-[24px] text-center text-black text-4xl font-extrabold font-['Petrona']">
           Reset password
