@@ -1,5 +1,5 @@
 import sendGrid from '@sendgrid/mail';
-import { BaseError, RequestError } from '../utils/errors.js';
+import { BaseError, RequestError } from '../utils/errors';
 interface IEmailOptions {
   to: string;
   subject: string;

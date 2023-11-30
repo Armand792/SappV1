@@ -123,7 +123,7 @@ const Login = () => {
         {(props: FormikProps<IFormValues>) => {
           return (
             <section className='w-full h-full justify-center items-center gap-2 flex flex-col'>
-              <div className='w-full h-20 flex-col justify-between items-start inline-flex'>
+              <div className='w-full flex-col justify-between items-start inline-flex'>
                 <h1 className="self-stretch text-center text-black text-4xl font-extrabold font-['Petrona']">
                   Login to Worthy
                 </h1>

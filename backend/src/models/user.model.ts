@@ -1,6 +1,6 @@
-import sql from '../utils/db.js';
+import sql from '../utils/db';
 import { PendingQuery, Row, RowList } from 'postgres';
-import { DataBaseError } from '../utils/errors.js';
+import { DataBaseError } from '../utils/errors';
 
 export class UserModel {
   static async registerUser(user: {

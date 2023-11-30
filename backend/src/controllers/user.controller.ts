@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import * as apiUtils from '../utils/utils.js';
-import * as userServices from '../services/user.services.js';
-import { DataBaseError, RequestError } from '../utils/errors.js';
+import * as apiUtils from '../utils/utils';
+import * as userServices from '../services/user.services';
+import { DataBaseError, RequestError } from '../utils/errors';
 
 /**
  * Post handler.

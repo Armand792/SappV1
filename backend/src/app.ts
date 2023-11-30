@@ -1,15 +1,15 @@
-import logger from './utils/logger.js';
+import logger from './utils/logger';
 import express, { Application, Response, Request } from 'express';
 import winstonMiddleware from 'express-winston';
 import {
   allowedContentType,
   allowedHeaders,
   allowedHttpMethods,
-} from './middlewares/app.middleware.js';
-import nocache from 'nocache';
+} from './middlewares/app.middleware';
+// import nocache from 'nocache';
 import cors from 'cors';
 
-import userRouter from './routers/user.router.js';
+import userRouter from './routers/user.router';
 
 const app: Application = express();
 
@@ -43,6 +43,11 @@ app.use(
   })
 );
 
+app.get('/', (req: Request, res: Response) => {
+  return res.status(200).json({
+    message: 'Server is up',
+  });
+});
 app.use('/api/user', userRouter);
 
 export default app;

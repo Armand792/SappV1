@@ -10,12 +10,12 @@ import {
   IResetPasswordRequest,
   IResponse,
   IVerificationRequest,
-} from '../interfaces/user.interface.js';
-import { UserModel } from '../models/user.model.js';
-import { sendMail } from '../services/email.services.js';
+} from '../interfaces/user.interface';
+import { UserModel } from '../models/user.model';
+import { sendMail } from '../services/email.services';
 import { v4 as uuidv4 } from 'uuid';
-import * as utils from '../utils/utils.js';
-import { RequestError } from '../utils/errors.js';
+import * as utils from '../utils/utils';
+import { RequestError } from '../utils/errors';
 
 /**
  * ContinueWithGoogle signin and signup
