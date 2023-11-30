@@ -4,11 +4,8 @@ import { useAppSelector } from '@/utils/hooks/store.hooks';
 import { RootState } from '@/store';
 import { useSession } from 'next-auth/react';
 
-const WithAuthMiddleware = (
-  component: JSX.Element | Element,
-  path?: string
-) => {
-  return () => {
+const WithAuthMiddleware = (component: any, path?: string) => {
+  return (): JSX.Element | Element => {
     const navigation = useRouter();
     const { status } = useSession();
     const userAuth = useAppSelector((state: RootState) => state.user.auth);
@@ -21,7 +18,7 @@ const WithAuthMiddleware = (
       navigation.push(path ?? '/login');
     }
 
-    return <>{component}</>;
+    return <>{typeof component === 'function' ? component() : component} </>;
   };
 };
 
