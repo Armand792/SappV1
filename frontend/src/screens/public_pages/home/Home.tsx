@@ -7,14 +7,14 @@ import { signOut, useSession } from 'next-auth/react';
 const Home = () => {
   const dispatch = useAppDispatch();
 
-  const signUserOut = async () => {
+  const signUserOut = () => {
     console.log('here');
-    // dispatch(
-    //   logout({
-    //     user_id: '',
-    //     token: '',
-    //   })
-    // );
+    dispatch(
+      logout({
+        user_id: '',
+        token: '',
+      })
+    );
     signOut();
   };
 
@@ -22,13 +22,13 @@ const Home = () => {
     <WithAuthMiddleware>
       <div className='flex items-center flex-col justify-center h-full w-full mb-[10px]'>
         home
-        <Button
-          onClick={() => () => {
+        <button
+          onClick={() => {
             signUserOut();
           }}
         >
           sign out
-        </Button>
+        </button>
       </div>
     </WithAuthMiddleware>
   );
