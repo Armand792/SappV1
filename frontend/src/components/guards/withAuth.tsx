@@ -11,11 +11,7 @@ const WithAuthMiddleware = ({ children }: { children: ReactNode }) => {
   const userAuth = useAppSelector((state: RootState) => state.user.auth);
 
   const checkAuth = () => {
-    if (
-      userAuth.token === '' ||
-      userAuth.user_id === '' ||
-      status === 'unauthenticated'
-    ) {
+    if (userAuth.token === '' && userAuth.user_id === '') {
       navigation.push('/login');
     }
   };
@@ -23,10 +19,6 @@ const WithAuthMiddleware = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     checkAuth();
   }, [status, userAuth]);
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
 
   return <>{children} </>;
 };
