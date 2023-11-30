@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import { store, persistor } from '@/store';
+import { store, persistor } from '../store/index';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SessionProvider } from 'next-auth/react';
 
