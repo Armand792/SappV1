@@ -38,7 +38,8 @@ const Registration = () => {
   const dispatch = useAppDispatch();
   const history = useRouter();
   const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
+  const session = useSession();
+  //{ data: session, status }
 
   const googleSignin = async () => {
     try {
@@ -71,19 +72,16 @@ const Registration = () => {
 
   const autoLogin = async () => {
     return await apiServer.continueWithGoogle({
-      email: session?.user.email ?? '',
-      token: session?.accessToken ?? '',
+      email: session?.data?.user.email ?? '',
+      token: session?.data?.accessToken ?? '',
     });
   };
 
   useEffect(() => {
-    // if (session === null || session === undefined) {
-    //   return;
-    // }
     if (
-      status === 'unauthenticated' ||
-      session === null ||
-      session === undefined
+      session?.status === 'unauthenticated' ||
+      session?.data === null ||
+      session?.data === undefined
     ) {
       return;
     }
@@ -107,7 +105,7 @@ const Registration = () => {
         });
         signOut({ redirect: false });
       });
-  }, [status]);
+  }, [session?.status]);
 
   return (
     <main className='w-full max-w-[640px] min-h-[640px]  [padding-left:_clamp(1rem,2vw,calc(64rem_/_16))]  [padding-right:_clamp(1rem,2vw,calc(64rem_/_16))]   py-[32px]  bg-white rounded-2xl shadow justify-center items-center gap-2 inline-flex mx-auto'>
