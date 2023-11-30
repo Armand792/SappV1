@@ -9,7 +9,7 @@ const ContextProvider = ({
   children,
   session,
 }: {
-  children: React.ReactNode;
+  children: any;
   session: any;
 }) => {
   return (
