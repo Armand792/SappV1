@@ -102,5 +102,6 @@
   },
 
   "include": ["src/**/*"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"],
+  "typeRoots": ["./node_module/@types", "./src/types"]
 }

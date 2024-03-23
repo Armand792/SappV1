@@ -78,18 +78,15 @@ export const loginUser = async (req: Request, res: Response) => {
  * @param  {Request} req
  * @param  {Response} res
  */
-export const resetPassword = async (req: Request, res: Response) => {
+export const getDashboardInformation = async (req: Request | any, res: Response) => {
   try {
-    const { email } = req.body;
     const payload = {
-      email,
+      user_id: req?.user?.user_id ?? '',
     };
-    const reset_password_information =
-      await userServices.resetPassword(payload);
+    const user_information =
+      await userServices.getUserDashboardDetails(payload);
 
-    res
-      .status(200)
-      .json(apiUtils.buildSuccessResponse(reset_password_information));
+    res.status(200).json(apiUtils.buildSuccessResponse(user_information));
   } catch (error) {
     if (error instanceof DataBaseError) {
       return res
@@ -113,23 +110,11 @@ export const resetPassword = async (req: Request, res: Response) => {
  * @param  {Request} req
  * @param  {Response} res
  */
-export const resetPasswordConfirmation = async (
-  req: Request,
-  res: Response
-) => {
+export const getPlatformUsers = async (req: Request | any, res: Response) => {
   try {
-    const { email, password, code } = req.body;
-    const payload = {
-      password,
-      email,
-      code,
-    };
-    const reset_password_information =
-      await userServices.resetPasswordConfirmation(payload);
+    const users_information = await userServices.getPlatformUser();
 
-    res
-      .status(200)
-      .json(apiUtils.buildSuccessResponse(reset_password_information));
+    res.status(200).json(apiUtils.buildSuccessResponse(users_information));
   } catch (error) {
     if (error instanceof DataBaseError) {
       return res
@@ -148,86 +133,8 @@ export const resetPasswordConfirmation = async (
 };
 
 
-/**
- * Post handler.
- *
- * @param  {Request} req
- * @param  {Response} res
- */
-export const verifyAccount = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const { email, code } = req.body;
-    const payload = {
-      code,
-      email,
-    };
-    
-    const verification_information =
-      await userServices.verifyAccount(payload);
-
-    res
-      .status(200)
-      .json(apiUtils.buildSuccessResponse(verification_information));
-  } catch (error) {
-    if (error instanceof DataBaseError) {
-      return res
-        .status(422)
-        .json(apiUtils.buildErrorResponse(['Server error']));
-    } else if (error instanceof RequestError) {
-      return res
-        .status(error.code ?? 200)
-        .json(apiUtils.buildErrorResponse(error));
-    } else {
-      return res
-        .status(500)
-        .json(apiUtils.buildErrorResponse(['Server error']));
-    }
-  }
-};
 
 
-/**
- * Post handler.
- *
- * @param  {Request} req
- * @param  {Response} res
- */
-export const continueWithGoogle = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const { email, token } = req.body;
-    const payload = {
-      token,
-      email,
-    };
-    
-    const continueWithGoogle_information =
-      await userServices.continueWithGoogle(payload);
-
-    res
-      .status(200)
-      .json(apiUtils.buildSuccessResponse(continueWithGoogle_information));
-  } catch (error) {
-    if (error instanceof DataBaseError) {
-      return res
-        .status(422)
-        .json(apiUtils.buildErrorResponse(['Server error']));
-    } else if (error instanceof RequestError) {
-      return res
-        .status(error.code ?? 200)
-        .json(apiUtils.buildErrorResponse(error));
-    } else {
-      return res
-        .status(500)
-        .json(apiUtils.buildErrorResponse(['Server error']));
-    }
-  }
-};
 
 
 

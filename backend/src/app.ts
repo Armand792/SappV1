@@ -10,12 +10,14 @@ import {
 import cors from 'cors';
 
 import userRouter from './routers/user.router';
+import paymentRouter from './routers/payment.router';
 
 const app: Application = express();
 
 app.use(allowedHttpMethods);
 app.use(allowedContentType);
 app.use(allowedHeaders);
+
 app.use(
   cors({
     origin: '*',
@@ -23,6 +25,7 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -48,6 +51,8 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Server is up',
   });
 });
+
+app.use('/api/payment', paymentRouter);
 app.use('/api/user', userRouter);
 
 export default app;

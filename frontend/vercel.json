@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/proxy/:match*",
-      "destination": "http://dev-worthy-backend.us-east-1.elasticbeanstalk.com/:match*"
-    }
-  ]
-}

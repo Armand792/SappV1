@@ -3,13 +3,10 @@
  */
 
 import {
+  IGetDashboardInformation,
   ILoginRequest,
   IRegistrationRequest,
   IResponse,
-  IResetPasswordRequest,
-  IResetPasswordConfirmationRequest,
-  IVerificationRequest,
-  IContinueWithGoogleRequest,
 } from '../interfaces/user.interface';
 import * as repo from '../repositories/user.repositories';
 
@@ -36,47 +33,27 @@ export const userLogin = async (
 };
 
 /**
- * Reset user password.
+ * get user dashboard details
  *
  * @returns Promise
  */
-export const resetPassword = async (
-  user: IResetPasswordRequest
+export const getUserDashboardDetails = async (
+  data: IGetDashboardInformation
 ): Promise<IResponse | []> => {
-  return await repo.resetPassword(user);
+  return await repo.getUserDashboardInformation(data);
 };
 
 /**
- * Reset user password confirmation.
+ * get platform users
  *
  * @returns Promise
  */
-export const resetPasswordConfirmation = async (
-  user: IResetPasswordConfirmationRequest
-): Promise<IResponse | []> => {
-  return await repo.resetPasswordConfirmation(user);
+export const getPlatformUser = async (): Promise<IResponse | []> => {
+  return await repo.getPlatformUsers();
 };
 
-/**
- * Verify user account
- *
- * @returns Promise
- */
-export const verifyAccount = async (
-  verificationData: IVerificationRequest
-): Promise<IResponse | []> => {
-  return await repo.verifyAccount(verificationData);
-};
 
-/**
- * Continue with google signin and signup
- *
- * @returns Promise
- */
-export const continueWithGoogle = async (
-  data: IContinueWithGoogleRequest
-): Promise<IResponse | []> => {
-  return await repo.continueWithGoogle(data);
-};
+
+
 
 

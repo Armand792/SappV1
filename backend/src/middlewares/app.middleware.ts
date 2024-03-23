@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { buildErrorResponse } from '../utils/utils';
+import { buildErrorResponse, jwtVerifyToken } from '../utils/utils';
 
 /**
  * AllowedHttpMethods middleware.
@@ -40,7 +40,6 @@ export const allowedHeaders = (
   next();
 };
 
-
 /**
  * AllowedContentType middleware.
  *
@@ -60,3 +59,45 @@ export const allowedContentType = (
   // }
   return next();
 };
+
+/**
+ * authorization middleware.
+ *
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} next
+ */
+
+export const authorization = async (
+  req: Request | any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (req.headers['authorization'] !== '') {
+      const token = req.headers['authorization'].split(' ')[1] ?? '';
+
+      const payload = (await jwtVerifyToken(token ? token : '')) as {
+        user_id: string;
+      };
+      req.user = {
+        user_id: payload.user_id,
+      };
+      return next();
+    }
+    return res.status(403).json(
+      buildErrorResponse({
+        status: 403,
+        message: 'Unauthorized',
+      })
+    );
+  } catch (error) {
+    return res.status(403).json(
+      buildErrorResponse({
+        status: 403,
+        message: 'Unauthorized',
+      })
+    );
+  }
+};
+

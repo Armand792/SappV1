@@ -4,48 +4,27 @@
 import { Router } from 'express';
 import { validateSchema, whitelist } from '../utils/utils';
 import {
-  continueWithGoogle,
   createUser,
   loginUser,
-  resetPassword,
-  resetPasswordConfirmation,
-  verifyAccount,
+  getDashboardInformation,
+  getPlatformUsers,
 } from '../controllers/user.controller';
-import {
-  ContinueWithGoogleSchema,
-  LoginSchema,
-  RegistrationSchema,
-  ResetPasswordConfirmationSchema,
-  ResetPasswordSchema,
-  VerificationSchema,
-} from '../schemas/user.schema';
+import { LoginSchema, RegistrationSchema } from '../schemas/user.schema';
+import { authorization } from '../middlewares/app.middleware';
 
 const router = Router();
-
-router
-  .route('/continue-with-google')
-  .post([validateSchema(ContinueWithGoogleSchema)], continueWithGoogle);
 
 router
   .route('/register')
   .post([validateSchema(RegistrationSchema)], createUser);
 
+router
+  .route('/user-dashboard-information')
+  .get([authorization], getDashboardInformation);
+
+router.route('/platform-users').get([authorization], getPlatformUsers);
+
 router.route('/login').post([validateSchema(LoginSchema), loginUser]);
 
-router
-  .route('/verify-account')
-  .post([validateSchema(VerificationSchema), verifyAccount]);
-
-router
-  .route('/reset-password')
-  .post([validateSchema(ResetPasswordSchema), resetPassword]);
-
-  
-router
-  .route('/reset-password-confirmation')
-  .post([
-    validateSchema(ResetPasswordConfirmationSchema),
-    resetPasswordConfirmation,
-  ]);
 
 export default router;

@@ -3,27 +3,8 @@ export interface IRegisterPayload {
   password: string;
 }
 
-export interface IContinueWithGooglePayload {
-  email: string;
-  token: string;
-}
-
 export interface ILoginPayload {
   email: string;
   password: string;
 }
 
-export interface IVerifyAccountPayload {
-  email: string;
-  code: string;
-}
-
-export interface IResetPayload {
-  email: string;
-}
-
-export interface IResetPasswordConfirmationPayload {
-  email: string;
-  password: string;
-  code: string;
-}
